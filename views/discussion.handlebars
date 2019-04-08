@@ -1,0 +1,67 @@
+<div class="jumbotron jumbotron-fluid">
+  <div class="container">
+    <a href="/"><h1 class="display-4" id="jumboTitle">Newspaper Scraper</h1></a>
+    <p class="lead"><i class="far fa-newspaper"></i> This page collects news articles from around the web and brings it all here.</p>
+  </div>
+</div>
+<div class="container">
+    <div class="card">
+    {{#if article.picture}}
+    <img src="{{article.picture}}" class="card-img-top" alt="...">
+    {{else}}
+        <i class="far fa-newspaper"></i>
+    {{/if}}
+        <div class="card-body">
+        <h5 class="card-title">{{article.title}}</h5>
+        <p class="card-text">{{article.summary}}</p>
+        <a href="{{article.link}}" class="card-link">Source article</a>
+        </div>
+    </div>
+   
+    {{#each article.comment}}
+        <div class="card">
+            <div class="card-body">
+            <h5 class="card-title">{{title}}</h5>
+            <div class="card-text">{{body}}</div>
+            </div>
+        </div>
+    {{/each}}
+<br>
+    <form>
+    <div class="form-group">
+        <label for="commentTitle">Comment Title</label>
+        <input type="text" class="form-control" id="titleinput" placeholder="Comment Title">
+    </div>
+    <div class="form-group">
+        <label for="bodyinput">Comment</label>
+        <input type="text" class="form-control" id="bodyinput" placeholder="Place your comment here">
+    </div>
+        <button id="savecomment" data-id="{{article._id}}" class="btn btn-primary">Comment</button>
+    </form>
+</div>
+<script>
+$(document).on("click", "#savecomment", function(event) {
+    {{!-- event.preventDefault(); --}}
+    let thisId = $(this).attr("data-id");
+$.ajax({
+    method: "POST",
+    url: "/article/" + thisId,
+    data: {
+      // Value taken from title input
+      title: $("#titleinput").val(),
+      // Value taken from body textarea
+      body: $("#bodyinput").val()
+    }
+  })    
+  .then(function(data) {
+    // Log the response
+    console.log(data);
+  
+
+  });
+  $("#titleinput").val("");
+  $("#bodyinput").val("");
+ 
+});
+
+</script>

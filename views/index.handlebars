@@ -1,0 +1,51 @@
+<div class="jumbotron jumbotron-fluid">
+  <div class="container">
+    <a href="/"><h1 class="display-4" id="jumboTitle">Newspaper Scraper</h1></a>
+    <p class="lead"><i class="far fa-newspaper"></i> This page collects news articles from around the web and brings it all here.</p>
+  </div>
+</div>
+<div class="container">
+<a  href="/scrape" ><button type="button"class="btn btn-secondary btn-lg btn-block">Scrape NPR for News</button></a>
+<br>
+
+<div>
+<ul>
+  {{#each article}}
+    <div class="card">
+    {{#if picture}}
+    <img src="{{picture}}" class="card-img-top" alt="...">
+    {{else}}
+        <i class="far fa-newspaper"></i>
+    {{/if}}
+        <div class="card-body">
+        <h5 class="card-title">{{title}}</h5>
+        <p class="card-text">{{summary}}</p>
+        <a href="{{link}}" class="card-link">Source article</a>
+        <a href="/article/{{_id}}" data-id="{{_id}}" class="btn btn-primary">Comment</a>
+        </div>
+    </div>
+  {{/each}}
+</ul>
+</div>
+
+<nav aria-label="Page navigation example">
+  <ul class="pagination">
+    <li class="page-item">
+      <a class="page-link" href="#" aria-label="Previous">
+        <span aria-hidden="true">&laquo;</span>
+      </a>
+    </li>
+    <li class="page-item"><a class="page-link" href="/">1</a></li>
+    <li class="page-item"><a class="page-link" href="/?pageNo=2&size=10">2</a></li>
+    <li class="page-item"><a class="page-link" href="/?pageNo=3&size=10">3</a></li>
+    <li class="page-item">
+      <a class="page-link" href="#" aria-label="Next">
+        <span aria-hidden="true">&raquo;</span>
+      </a>
+    </li>
+  </ul>
+</nav>
+</div>
+
+
+
