@@ -20,6 +20,12 @@
    
     {{#each article.comment}}
         <div class="card">
+            <div class="row">
+            <div class="col-sm-11"></div>
+            <div class="col-sm-1">
+            <button id="deleteComment" data-id="{{_id}}" class="btn btn-outline-danger" style="float:right"data-toggle="tooltip" data-placement="top" title="Delete this comment">x</button>
+            </div>
+            </div>
             <div class="card-body">
             <h5 class="card-title">{{title}}</h5>
             <div class="card-text">{{body}}</div>
@@ -63,5 +69,19 @@ $.ajax({
   $("#bodyinput").val("");
  
 });
+
+$(document).on("click", "#deleteComment", function(event){
+    let thisId = $(this).attr("data-id");
+    $.ajax({
+        method: "DELETE",
+        url: "/comment/" + thisId,
+        data: {
+            _id: thisId
+        }
+    })
+    .then(function(data){
+        console.log(data)
+    });
+})
 
 </script>

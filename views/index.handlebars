@@ -12,34 +12,41 @@
 <ul>
   {{#each article}}
     <div class="card">
+      <div class="row">
+        <div class="col-sm-10">
     {{#if picture}}
-    <img src="{{picture}}" class="card-img-top" alt="...">
+      <img src="{{picture}}" class="card-img-top" alt="...">
     {{else}}
         <i class="far fa-newspaper"></i>
     {{/if}}
+    </div>
+      <div class="col-sm-1">
+      <button id="deleteArticle" data-id="{{_id}}" class="btn btn-outline-danger" style="display:inline; float:left" data-toggle="tooltip" data-placement="top" title="Delete this article">x</button>
+      </div>
+    </div>  
         <div class="card-body">
         <h5 class="card-title">{{title}}</h5>
         <p class="card-text">{{summary}}</p>
         <a href="{{link}}" class="card-link">Source article</a>
-        <a href="/article/{{_id}}" data-id="{{_id}}" class="btn btn-primary">Comment</a>
+        <a href="/article/{{_id}}" data-id="{{_id}}" class="btn btn-primary">View Comments</a>
         </div>
     </div>
   {{/each}}
 </ul>
 </div>
 
-<nav aria-label="Page navigation example">
-  <ul class="pagination">
+<nav aria-label="Page navigation">
+  <ul class="pagination justify-content-center">
     <li class="page-item">
-      <a class="page-link" href="#" aria-label="Previous">
+      <a class="page-link" tabindex="-1" href="#" aria-label="Previous">
         <span aria-hidden="true">&laquo;</span>
       </a>
     </li>
     <li class="page-item"><a class="page-link" href="/">1</a></li>
-    <li class="page-item"><a class="page-link" href="/?pageNo=2&size=10">2</a></li>
-    <li class="page-item"><a class="page-link" href="/?pageNo=3&size=10">3</a></li>
+    <li class="page-item"><a class="page-link" href="/2/10">2</a></li>
+    <li class="page-item"><a class="page-link" href="/3/10">3</a></li>
     <li class="page-item">
-      <a class="page-link" href="#" aria-label="Next">
+      <a class="page-link" tabindex="1" href="#" aria-label="Next">
         <span aria-hidden="true">&raquo;</span>
       </a>
     </li>
@@ -47,5 +54,23 @@
 </nav>
 </div>
 
+<script>
+$(document).on("click", "#deleteArticle", function(event){
+    let thisId = $(this).attr("data-id");
+    console.log(thisId);
+    
+    $.ajax({
+        method: "DELETE",
+        url: "/article/" + thisId,
+        data: {
+            _id: thisId
+        }
+    })
+    .then(function(data){
+        console.log(data)   
+    });
+    location.reload():
+})
+</script>
 
 

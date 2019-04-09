@@ -60,7 +60,7 @@ app.get("/scrape", function(req, res) {
         .find('figure > div > div.imagewrap > a > img')
         .attr('src');
         // document.querySelector('#story710250537 > div > figure > div > div.imagewrap > a > img')
-     
+      console.log(result.picture)
       // Create a new Article using the `result` object built from scraping
       db.Article.create(result)
         .then(function(dbArticle) {
@@ -142,6 +142,29 @@ app.post("/article/:id", function(req, res) {
     .catch(function(err) {
       // If an error occurred, send it to the client
       res.json(err);
+    });
+});
+
+app.delete("/article/:id", function(req, res){
+  console.log(req.body)
+    db.Article.deleteOne(req.body).then(function(result) {
+      console.log("Successfully Deleted")
+      res.json(result)
+    })
+    .catch(function(err){
+      res.json(err)
+    });
+});
+
+
+app.delete("/comment/:id", function(req, res){
+  
+    db.Comment.deleteOne(req.body).then(function(result) {
+      console.log("Successfully Deleted")
+      res.json(result)
+    })
+    .catch(function(err){
+      res.json(err)
     });
 });
 
