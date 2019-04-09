@@ -80,20 +80,21 @@ app.get("/scrape", function(req, res) {
 
 // Route for getting all Articles from the db
 app.get("/", function(req, res) {
-  let pageNo = 1 || parseInt(req.query.pageNo)
-  let size = 10 || parseInt(req.query.size)
-  let query = {}
+  let pageNo = parseInt(req.query.pageNo) || 1
+  let size = parseInt(req.query.size) || 10
+
+  let pagination = {}
   if(pageNo < 0 || pageNo === 0) {
-        response = {"error" : true,"message" : "invalid page number, should start with 1"};
+        let response = {"error" : true,"message" : "invalid page number, should start with 1"};
         return res.json(response)
   }
-  query.sort = '-date'
-  query.skip = size * (pageNo - 1)
-  query.limit = size;
+  pagination.sort = '-date'
+  pagination.skip = size * (pageNo - 1)
+  pagination.limit = size;
   
-
+  console.log(pagination);
   // Grab every document in the Articles collection
-  db.Article.find({}, {}, query )
+  db.Article.find({}, {}, pagination )
     .then(function(dbArticle) {
      
       // If we were able to successfully find Articles, send them back to the client
